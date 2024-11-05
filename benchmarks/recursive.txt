@@ -1,0 +1,37 @@
+class recursive {
+  recursive();
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+
+  static int nthFibonacci(int);
+       0: iload_0
+       1: iconst_1
+       2: if_icmpgt     7
+       5: iload_0
+       6: ireturn
+       7: iload_0
+       8: iconst_1
+       9: isub
+      10: invokestatic  #7                  // Method nthFibonacci:(I)I
+      13: iload_0
+      14: iconst_2
+      15: isub
+      16: invokestatic  #7                  // Method nthFibonacci:(I)I
+      19: iadd
+      20: ireturn
+
+
+  public static void main(java.lang.String[]);
+       0: iconst_5
+       1: istore_1
+       2: iload_1
+       3: invokestatic  #7                  // Method nthFibonacci:(I)I
+       6: istore_2
+       7: getstatic     #13                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      10: iload_2
+      11: invokevirtual #19                 // Method java/io/PrintStream.println:(I)V
+      14: return
+
+}

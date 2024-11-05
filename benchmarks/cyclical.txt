@@ -1,0 +1,33 @@
+class Fibonacci {
+  Fibonacci();
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+
+  static void main(java.lang.String[]);
+       0: iconst_0
+       1: istore_1
+       2: iconst_1
+       3: istore_2
+       4: iconst_0
+       5: istore_3
+       6: iload_3
+       7: bipush        10
+       9: if_icmpge     35
+      12: getstatic     #7                  // Field java/lang/System.out:Ljava/io/PrintStream;
+      15: iload_1
+      16: invokevirtual #13                 // Method java/io/PrintStream.println:(I)V
+      19: iload_1
+      20: iload_2
+      21: iadd
+      22: istore        4
+      24: iload_2
+      25: istore_1
+      26: iload         4
+      28: istore_2
+      29: iinc          3, 1
+      32: goto          6
+      35: return
+
+}

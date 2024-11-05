@@ -1,0 +1,233 @@
+lda:
+    descr: "load from rs to acc"
+    opcode: 1
+    rs:
+      bits: [8, 15]
+
+lda.imm.i32:
+    descr: "load i32 immediate to acc"
+    opcode: 2
+    imm_i32: [32, 63]
+
+lda.imm.f:
+    descr: "load float immediate to acc"
+    opcode: 3
+    imm_f: [32, 63]
+
+lda.str:
+    desc: "load string in accumulator."
+    opcode: 4
+    params:
+        str_id: [8, 23]
+
+sta:
+    descr: "store acc to rd."
+    opcode: 5
+    rd: [8, 15]
+
+mov:
+    descr: "move rs to rd."
+    opcode: 6
+    params:
+        rs: [8, 15]
+        rd: [16, 23]
+
+mov.imm.i32:
+    descr: "move i32 immediate to rd."
+    opcode: 7
+    rd: [8, 15]
+    imm_i32: [32, 63]
+
+mov.imm.f:
+    descr: "move float immediate to rd."
+    opcode: 8
+    rd: [8, 15]
+    imm_f: [32, 63]
+
+add.i32:
+    descr: "acc = acc.i32 + rs.i32"
+    opcode: 9
+    rs: [8, 15]
+
+sub.i32:
+    descr: "acc = acc.i32 - rs.i32"
+    opcode: 10
+    rs: [8, 15]
+
+add.f:
+    descr: "acc = acc.float + rs.float"
+    opcode: 11
+    rs: [8, 15]
+
+sub.f:
+    descr: "acc = acc.float - rs.float"
+    opcode: 12
+    rs: [8, 15]
+
+mod:
+    descr: "acc = acc.i32 % rs.i32"
+    opcode: 13
+    rs: [8, 15]
+
+div.i32:
+    descr: "acc = acc.i32 / rs.i32"
+    opcode: 14
+    rs: [8, 15]
+
+div.f:
+    descr: "acc = acc.float / rs.float"
+    opcode: 15
+    rs: [8, 15]
+
+mul.i32:
+    descr: "acc = acc.i32 * rs.i32"
+    opcode: 16
+    rs: [8, 15]
+
+mul.f:
+    descr: "acc = acc.float * rs.float"
+    opcode: 17
+    rs: [8, 15]
+
+ret:
+    descr: "returned value passed in acc,
+            exit from current frame"
+    opcode: 18
+
+jump:
+    descr: "pc = pc + offset"
+    opcode: 19
+    is_jump: true
+    jump_offset: [8, 63]
+      is_signed: true
+
+jump.gg:
+    descr: "(acc > rs) ? (pc = pc + offset) : (pc = pc + 8)"
+    opcode: 20
+    is_jump: true
+    params:
+        rs: [8, 15]
+        jump_offset: [16, 63]
+            is_signed: true
+
+jump.ll:
+    descr: "(acc < rs) ? (pc = pc + offset) : (pc = pc + 8)"
+    opcode: 21
+    is_jump: true
+    params:
+        rs: [8, 15]
+        jump_offset: [16, 63]
+            is_signed: true
+
+jump.eq:
+    descr: "(acc == rs) ? (pc = pc + offset) : (pc = pc + 8)"
+    opcode: 22
+    is_jump: true
+    params:
+        rs: [8, 15]
+        jump_offset: [16, 63]
+            is_signed: true
+
+jump.not.eq:
+    descr: "(acc != rs) ? (pc = pc + offset) : (pc = pc + 8)"
+    opcode: 23
+    is_jump: true
+    params:
+        rs: [8, 15]
+        jump_offset: [16, 63]
+            is_signed: true
+
+call.0arg:
+    desct: "call function with no arguments"
+    opcode: 24
+    params:
+        func_id: [8, 31]
+
+call.1arg:
+    desct: "call function with one argument"
+    opcode: 25
+    params:
+        func_id: [8, 31]
+        func_arg0: [32, 39]
+
+call.2arg:
+    desct: "call function with two arguments"
+    opcode: 26
+    params:
+        func_id: [8, 31]
+        func_arg0: [32, 39]
+        func_arg1: [40, 47]
+
+i32tof:
+    descr: "acc = acc.float"
+    opcode: 27
+
+ftoi32:
+    descr: "acc = acc.i32"
+    opcode: 28
+
+cmp.eq.i32:
+    desc: "acc == rs"
+    opcode: 29
+    params:
+        rs: [8, 15]
+
+cmp.gg.i32:
+    desc: "acc > rs"
+    opcode: 30
+    params:
+        rs: [8, 15]
+
+cmp.ll.i32:
+    desc: "acc < rs"
+    opcode: 31
+    params:
+        rs: [8, 15]
+
+arr.length:
+    descr: "store the size of array in rs into acc"
+    opcode: 32
+    params:
+        rs: [8, 15]
+
+arr.new.i32:
+    descr: "create new i32 array of size rs"
+    opcode: 33
+    params:
+        rd: [8, 15]
+        rs: [16, 23]
+
+arr.new.f:
+    descr: "create new f array of size rs"
+    opcode: 34
+    params:
+        rd: [8, 15]
+        rs: [16, 23]
+
+arr.lda.i32:
+    descr: "load rs[rt] to acc"
+    opcode: 36
+    params:
+        rs: [8, 15]
+        rt: [16, 23]
+
+arr.lda.f:
+    descr: "load rs[rt] to acc"
+    opcode: 37
+    params:
+        rs: [8, 15]
+        rst: [16, 23]
+
+arr.sta.i32:
+    descr: "store acc to rd[rs]"
+    opcode: 38
+    params:
+        rd: [8, 15]
+        rs: [16, 23]
+
+arr.sta.f:
+    descr: "store acc to rd[rs]"
+    opcode: 39
+    params:
+        rd: [8, 15]
+        rs: [16, 23]
