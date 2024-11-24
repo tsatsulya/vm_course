@@ -1,9 +1,12 @@
+#ifndef VM_BYTECODE
+#define VM_BYTECODE
+
 #include <cstdint>
 
 using reg_idx = uint64_t;
 using reg_t = uint64_t;
 using opcode_t = uint8_t;
-using mark_r = uint8_t;
+using mark_t = uint8_t;
 
 enum class opcode_table : opcode_t
 {
@@ -30,3 +33,6 @@ enum class opcode_table : opcode_t
     cmp_gg,
     cmp_ll
 };
+
+
+#endif  // VM_BYTECODE

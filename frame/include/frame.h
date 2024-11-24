@@ -1,16 +1,20 @@
+#ifndef VM_FRAME
+#define VM_FRAME
+
 #include <vector>
 #include "instruction.h"
 #include "stack.h"
-
-
-namespace frame {
+#include "method.h"
 
 class frame {
 public:
-    frame()  {}
+    method *callable;
+    offset_t return_offset;
 
-    int *reg_file;
+    stack_raw<frame> *stack;
+    std::vector<param_t> local_variables; // custom allocator
 
+    frame *prev  = nullptr;
 };
 
-}  // frame
+#endif // VM_FRAME

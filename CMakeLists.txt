@@ -7,8 +7,8 @@ project(vm LANGUAGES CXX)
 # set(CMAKE_CXX_EXTENSIONS        OFF)
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_subdirectory(frame)
+add_subdirectory(executor)
 
 add_executable(main ${PROJECT_SOURCE_DIR}/main.cpp)
 
-target_link_libraries(main PUBLIC frame)
+target_link_libraries(main PUBLIC executor)
