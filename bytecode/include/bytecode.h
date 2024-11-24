@@ -31,7 +31,8 @@ enum class opcode_table : opcode_t
     call2,
     cmp_eq,
     cmp_gg,
-    cmp_ll
+    cmp_ll,
+    terminate
 };
 
 
