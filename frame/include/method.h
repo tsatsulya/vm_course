@@ -16,6 +16,10 @@ class method {
 
 public:
     method(const char *name_, offset_t offset_) : name(name_), offset(offset_) {};
+
+    size_t get_params_amount() {
+        return params;
+    }
 };
 
 #endif // VM_METHOD
