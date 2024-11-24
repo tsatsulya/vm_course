@@ -2,9 +2,7 @@
 #define VM_STACK
 
 #include <cstddef>
-#include <cstdint>
 #include <vector>
-#include <type_traits>
 #include <cstring>
 
 template<typename T>
@@ -29,6 +27,13 @@ public:
         buffer.resize(capacity);
     }
 
+    T get_head() {
+        if (size) {
+            return buffer[size];
+        }
+        return T{};
+    }
+    
     T pop() {
         if (!size) return T{};
         if ( (--size) * 2 + 1 < capacity) {
@@ -78,6 +83,7 @@ public:
     bool is_full() {
         return size == capacity;
     }
+
 };
 
 #endif // VM_INSTRUCTION

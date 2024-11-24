@@ -9,17 +9,6 @@ lda.imm.i32:
     opcode: 2
     imm_i32: [32, 63]
 
-lda.imm.f:
-    descr: "load float immediate to acc"
-    opcode: 3
-    imm_f: [32, 63]
-
-lda.str:
-    desc: "load string in accumulator."
-    opcode: 4
-    params:
-        str_id: [8, 23]
-
 sta:
     descr: "store acc to rd."
     opcode: 5
@@ -37,12 +26,6 @@ mov.imm.i32:
     opcode: 7
     rd: [8, 15]
     imm_i32: [32, 63]
-
-mov.imm.f:
-    descr: "move float immediate to rd."
-    opcode: 8
-    rd: [8, 15]
-    imm_f: [32, 63]
 
 add.i32:
     descr: "acc = acc.i32 + rs.i32"

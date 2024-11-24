@@ -1,10 +1,8 @@
 #ifndef VM_METHOD
 #define VM_METHOD
 
-#include "instruction.h"
 #include <cstddef>
 #include <cstdint>
-#include <vector>
 
 using offset_t = uint32_t;
 using param_t = uint32_t;

@@ -5,9 +5,9 @@
 #include "bytecode.h"
 
 struct inst {
-    opcode_t opcode;
+    enum opcode_table opcode;
     mark_t mark;
-    std::unordered_map<reg_idx, reg_t> param_regs;
+    std::unordered_map<reg_idx, reg_t> params;
     reg_t imm;
     bool is_jump;
 
