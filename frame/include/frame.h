@@ -1,11 +1,16 @@
 #include <vector>
 #include "instruction.h"
+#include "stack.h"
+
 
 namespace frame {
 
-
 class frame {
-    std::vector<int> reg_file;
+public:
+    frame()  {}
+
+    int *reg_file;
+
 };
 
-}
+}  // frame
