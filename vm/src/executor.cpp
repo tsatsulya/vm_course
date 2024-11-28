@@ -6,47 +6,66 @@
 #include "frame.hpp"
 #include "method.hpp"
 
-void Executor::execute(Method *func, uint64_t *args, uint16_t num_args) {
-    Frame frame(func, &frame_vector.back());
+void Executor::execute(Method *func, uint64_t *args, size_t num_args) {
+    Frame frame(func, args, num_args, &frame_vector.back());
     frame_vector.push_back(frame);
 
     // push args on stack
+    for (size_t i = 0; i != num_args; ++i) {
+        frame.stack_push(args[i]);
+    }
 
     while (executeInstr(frame)) {
-        frame.inc_pc();
     }
 }
 
 bool Executor::executeInstr(Frame &frame) {
-    auto instr = static_cast<Opcode>(frame.getInstr(frame.get_pc()));
+    auto instr = static_cast<Opcode>(frame.getInstr<uint8_t>(frame.get_pc()));
     switch (instr) {
         case Opcode::LOAD: {
-            executeLoad(frame);
+            frame.inc_pc(1);
+            auto load_val = frame.getInstr<uint64_t>(frame.get_pc());
+
+            executeLoad(frame, load_val);
+            frame.inc_pc(8);
+            break;
+        }
+        case Opcode::STORE: {
+            frame.inc_pc(1);
+            auto store_index = frame.getInstr<uint8_t>(frame.get_pc());
+            
+            executeStore(frame, frame.stack_pop());
+            frame.inc_pc(1);
             break;
         }
         case Opcode::ADD: {
             executeAdd(frame);
+            frame.inc_pc(1);
             break;
         }
         case Opcode::INC: {
             executeInc(frame);
+            frame.inc_pc(1);
             break;
         }
         case Opcode::SUB: {
             executeSub(frame);
+            frame.inc_pc(1);
             break;
         }
         case Opcode::MUL: {
             executeMul(frame);
+            frame.inc_pc(1);
             break;
         }
         case Opcode::DIV: {
             executeDiv(frame);
+            frame.inc_pc(1);
             break;
         }
         case Opcode::RET: {
             executeRet(frame);
-            break; // return False;
+            break;  // return False;
         }
         case Opcode::CMP_GT: {
             executeCmpGt(frame);
@@ -54,7 +73,7 @@ bool Executor::executeInstr(Frame &frame) {
         }
         case Opcode::INVOKE: {
             executeInvoke(frame);
-            break; // return False;
+            break;  // return False;
         }
         default: {
             assert(0 && "Stop on unrecognized instruction opcode");
@@ -62,6 +81,13 @@ bool Executor::executeInstr(Frame &frame) {
     }
 
     return 1;
+}
+
+void Executor::executeLoad(Frame &frame, uint64_t val) { frame.stack_push(val); }
+
+void Executor::executeStore(Frame &frame, uint8_t index) {
+    assert(index < frame.getNumArgs() && "Store index out of range");
+    frame.storeArg(frame.stack_pop(), index);
 }
 
 void Executor::executeAdd(Frame &frame) {

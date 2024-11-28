@@ -13,7 +13,8 @@ class Executor {
 
     bool executeInstr(Frame &frame);
 
-    void executeLoad(Frame &frame);
+    void executeLoad(Frame &frame, uint64_t val);
+    void executeStore(Frame &frame, uint8_t index);
     void executeAdd(Frame &frrame);
     void executeInc(Frame &frame);
     void executeSub(Frame &frame);
@@ -26,7 +27,7 @@ class Executor {
    public:
     Executor() {}
 
-    void execute(Method *func, uint64_t *args, uint16_t num_args);
+    void execute(Method *func, uint64_t *args, size_t num_args);
 };
 
 #endif // EXECUTOR

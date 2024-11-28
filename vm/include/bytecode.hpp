@@ -18,6 +18,8 @@ enum class Opcode : opcode_t {
     RET = 0x7,
     CMP_GT = 0x8,
     INVOKE = 0x9,
+
+    STORE = 0xA,
 };
 
 #endif  // VM_BYTECODE
