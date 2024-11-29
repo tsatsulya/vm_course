@@ -1,9 +1,8 @@
+#include "machine.hpp"
 
-#include "frame.hpp"
-#include "method.hpp"
-#include "executor.hpp"
 int main() {
+    VMMachine vm{};
+    vm.run_fibonachi();
 
-
-    
+    return 0;
 }

@@ -16,10 +16,16 @@ enum class Opcode : opcode_t {
     MUL = 0x5,
     DIV = 0x6,
     RET = 0x7,
-    CMP_GT = 0x8,
+    
     INVOKE = 0x9,
 
     STORE = 0xA,
+    IPUSH = 0xB,
+
+    CMP_GT = 0xC,
+    CMP_GE = 0xD,
+
+    GOTO = 0xE,
 };
 
 #endif  // VM_BYTECODE

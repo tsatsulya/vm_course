@@ -5,16 +5,25 @@
 #include <cstdint>
 
 class Builder {
-   private:
-    void createLoad(uint64_t value);
+   public:
+    void createLoad(uint8_t value);
     void createStore(uint8_t index);
+    void createIPush(uint64_t value);
+    
     void createAdd();
-    void createInc();
+
+    void createInc(uint8_t index, int8_t value);
+    
     void createSub();
     void createMul();
     void createDiv();
     void createRet();
-    void createCmpGt();
+
+    void createCmpGe(uint16_t branch_offset);
+    void createCmpGt(uint16_t branch_offset);
+
+    void createGoto(uint16_t branch_offset);
+
     void createInvoke();
 
    public: // bytecode init for all expected create<OPCODE> 

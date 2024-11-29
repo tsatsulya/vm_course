@@ -4,6 +4,8 @@
 #include <cstddef>
 #include <assert.h>
 
+#include <iostream>
+
 #include "bytecode.hpp"
 
 using offset_t = uint32_t;
@@ -20,6 +22,7 @@ class Method {
 
     template <typename Type>
     [[nodiscard]] Type getInstr(uint32_t ip) {
+        std::cout << "ip: " << ip << std::endl; 
         assert(ip < m_size && "Instruction pointer out out of range");
         return *reinterpret_cast<Type*>(m_bytecode + ip);
     }

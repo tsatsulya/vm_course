@@ -17,6 +17,7 @@ set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 add_library(vm_lib STATIC
     ${SOURCE_DIR}/builder.cpp
     ${SOURCE_DIR}/executor.cpp
+    ${SOURCE_DIR}/machine.cpp
 )
 target_include_directories(vm_lib PUBLIC ${INCLUDE_DIR})
 

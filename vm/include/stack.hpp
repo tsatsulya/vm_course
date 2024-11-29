@@ -1,6 +1,7 @@
 #ifndef VM_STACK
 #define VM_STACK
 
+#include <iostream>
 #include <cstddef>
 #include <cstring>
 #include <vector>
@@ -8,40 +9,39 @@
 template <typename T>
 class Stack {
     std::vector<T> m_buffer;
-    size_t m_capacity;
-    size_t m_size = 0;
-
-    void expand() {
-        m_capacity *= 2;
-        m_buffer.resize(m_capacity);
-    }
-    void squeeze() {
-        m_capacity /= 2;
-        m_buffer.resize(m_capacity);
-    }
 
    public:
-    Stack(const size_t capacity = 0) : m_capacity(capacity) { m_buffer.resize(m_capacity); }
+    Stack() {}
 
     T pop() {
-        if (m_size == 0) {
+        if (m_buffer.size() == 0) {
             return T{};
         }
-        if ((--m_size) * 2 + 1 < m_capacity) {
-            squeeze();
-        }
-        return m_buffer[m_size];
+
+        auto pop_val = m_buffer.back();
+        m_buffer.pop_back();
+
+        std::cout << "Pop from stack " << pop_val << std::endl;
+        dump_stack();
+
+        return pop_val;
     };
 
     void push(T new_elem) {
-        if (is_full()) {
-            expand();
-        }
         m_buffer.push_back(new_elem);
-        m_size++;
+
+        std::cout << "m_buffer.size(): " << m_buffer.size() << std::endl;
+        std::cout << "Push on stack " << new_elem << std::endl;
+        dump_stack();
     };
 
-    bool is_full() { return m_size == m_capacity; }
+    void dump_stack() {
+        std::cout << "Stack: ";
+        for (size_t i = 0; i != m_buffer.size(); ++i) {
+            std::cout << m_buffer[i] << " ";
+        }
+        std::cout << std::endl;
+    }
 };
 
 #endif  // VM_STACK

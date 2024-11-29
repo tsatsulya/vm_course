@@ -4,8 +4,8 @@
 #include <cstdint>
 #include <vector>
 
-#include "method.hpp"
 #include "frame.hpp"
+#include "method.hpp"
 
 class Executor {
    private:
@@ -13,21 +13,31 @@ class Executor {
 
     bool executeInstr(Frame &frame);
 
-    void executeLoad(Frame &frame, uint64_t val);
+    void executeLoad(Frame &frame, uint8_t index);
     void executeStore(Frame &frame, uint8_t index);
+
+    void executeIPush(Frame &frame, uint64_t value);
+
     void executeAdd(Frame &frrame);
-    void executeInc(Frame &frame);
+
+    void executeInc(Frame &frame, uint8_t index, uint8_t value);
+
     void executeSub(Frame &frame);
     void executeMul(Frame &frame);
     void executeDiv(Frame &frame);
     void executeRet(Frame &frame);
-    void executeCmpGt(Frame &frame);
+
+    void executeCmpGe(Frame &frame, uint16_t branch_offset);
+    void executeCmpGt(Frame &frame, uint16_t branch_offset);
+
+    void executeGoto(Frame &frame, uint16_t branch_offset);
+
     void executeInvoke(Frame &frame);
 
    public:
     Executor() {}
 
-    void execute(Method *func, uint64_t *args, size_t num_args);
+    void execute(Method *func, uint64_t *args, size_t num_args, size_t num_local);
 };
 
-#endif // EXECUTOR
+#endif  // EXECUTOR
