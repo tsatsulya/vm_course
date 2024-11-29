@@ -32,8 +32,15 @@ enum class opcode_table : opcode_t
     cmp_eq,
     cmp_gg,
     cmp_ll,
-    terminate
+    terminate,
+    sign,
+    incr,
+    decr,
+    print,
+    print_imm,
 };
 
 
 #endif  // VM_BYTECODE
+
+

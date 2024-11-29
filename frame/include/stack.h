@@ -4,6 +4,8 @@
 #include <cstddef>
 #include <vector>
 #include <cstring>
+#include <cassert>
+#include <iostream>
 
 template<typename T>
 class stack_raw {
@@ -11,20 +13,11 @@ class stack_raw {
     size_t capacity;
     size_t size = 0;
 
-    void expand() {
-        capacity *= 2;
-        buffer.resize(capacity);
-    }
-    void squeeze() {
-        capacity /= 2;
-        buffer.resize(capacity);
-    }
-
 public:
 
     stack_raw() : capacity(0) {}
     stack_raw(const size_t capacity_) : capacity(capacity_) {
-        buffer.resize(capacity);
+        buffer.reserve(capacity);
     }
 
     T get_head() {
@@ -33,47 +26,28 @@ public:
         }
         return T{};
     }
-    
+
     T pop() {
         if (!size) return T{};
-        if ( (--size) * 2 + 1 < capacity) {
-            squeeze();
-        }
-        return buffer[size];
+        auto elem = buffer[--size];
+        buffer.erase(buffer.begin() + size);
+        return elem;
     };
 
     void push(T new_elem) {
-        if (size == capacity) expand();
-        buffer.push_back(new_elem);
+        // std::cout << "\nstack size/capacity : " << size << " " << capacity << '\n';
         size++;
+        assert(size < capacity);
+        buffer.push_back(new_elem);
     };
 
-    // void push(T new_element) {
-    //     static_assert(std::is_trivially_copyable<T>::value, "Non trivially copyable type");
-
-    //     size_t elem_size = sizeof(T);
-    //     if (size + elem_size > capacity) {
-    //         expand();
-    //     }
-
-    //     std::memcpy(&buffer[size], &new_element, elem_size);
-    //     size += elem_size;
-    // };
-
-
-    // T pop() {
-    //     size_t elem_size = sizeof(T);
-    //     if (elem_size > size) {
-    //         return T{};
-    //     }
-
-    //     T elem = reinterpret_cast<T>(buffer.end() - elem_size, buffer.end());
-    //     size -= elem_size;
-    //     if ( size * 2 + 1 < capacity) {
-    //         squeeze();
-    //     }
-    //     return elem;
-    // };
+    void print() {
+        std::cout << "stack : ";
+        for (auto &i: buffer) {
+            std::cout << (int)i << " ";
+        }
+        std::cout << '\n';
+    }
 
     void erase() {
         buffer.resize(0);
@@ -86,4 +60,4 @@ public:
 
 };
 
-#endif // VM_INSTRUCTION
+#endif // VM_STACK

@@ -14,18 +14,18 @@ sta:
     opcode: 5
     rd: [8, 15]
 
-mov:
-    descr: "move rs to rd."
-    opcode: 6
-    params:
-        rs: [8, 15]
-        rd: [16, 23]
+# mov:
+#     descr: "move rs to rd."
+#     opcode: 6
+#     params:
+#         rs: [8, 15]
+#         rd: [16, 23]
 
-mov.imm.i32:
-    descr: "move i32 immediate to rd."
-    opcode: 7
-    rd: [8, 15]
-    imm_i32: [32, 63]
+# mov.imm.i32:
+#     descr: "move i32 immediate to rd."
+#     opcode: 7
+#     rd: [8, 15]
+#     imm_i32: [32, 63]
 
 add.i32:
     descr: "acc = acc.i32 + rs.i32"
@@ -166,3 +166,8 @@ cmp.ll.i32:
     opcode: 31
     params:
         rs: [8, 15]
+
+sign:
+    func _*name*_ (int32  ...) void
+
+    sign name arg arg return

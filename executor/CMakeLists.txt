@@ -1,13 +1,17 @@
+# executor/CMakeLists.txt
 cmake_minimum_required(VERSION 3.10)
 
-set(SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/executor.cpp)
-set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/include)
+# Create a static library for executor
+add_library(executor STATIC
+    src/executor.cpp
+)
 
-project(Executor)
+# Specify include directories for executor
+target_include_directories(executor PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/bytecode/include>  # For instruction.h
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/frame/include>     # For method.h
+)
 
-# add_subdirectory(../bytecode ${CMAKE_CURRENT_BINARY_DIR}/bytecode_build)
-add_subdirectory(../frame ${CMAKE_CURRENT_BINARY_DIR}/frame_build)
-add_library(executor STATIC ${SOURCE})
-target_include_directories(executor PUBLIC ${PROJECT_INCLUDE_DIR})
-
-target_link_libraries(executor PUBLIC frame)
+# Link dependencies: executor requires arena and bytecode
+target_link_libraries(executor PUBLIC arena bytecode frame)

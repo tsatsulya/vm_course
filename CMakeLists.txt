@@ -1,14 +1,17 @@
-cmake_minimum_required(VERSION 3.28)
+# Top-level CMakeLists.txt
+cmake_minimum_required(VERSION 3.10)
+project(VM)
 
-project(vm LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20) # or 17, 20 etc.
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# set(CMAKE_CXX_STANDARD 20)
-# set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# set(CMAKE_CXX_EXTENSIONS        OFF)
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
+# Add subdirectories for the components
+add_subdirectory(arena)
+add_subdirectory(bytecode)
 add_subdirectory(executor)
+add_subdirectory(frame)
+add_subdirectory(benchmarks)
 
 add_executable(main ${PROJECT_SOURCE_DIR}/main.cpp)
-
 target_link_libraries(main PUBLIC executor)
+
