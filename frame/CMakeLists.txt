@@ -1,13 +1,15 @@
+# frame/CMakeLists.txt
 cmake_minimum_required(VERSION 3.10)
 
-set(SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/frame.cpp)
-set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/include)
+# Create a static library for frame
+add_library(frame STATIC
+    src/frame.cpp
+)
 
-project(Frame)
+# Specify include directories for frame
+target_include_directories(frame PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/bytecode/include>  # For instruction.h
+)
 
-add_subdirectory(../bytecode ${CMAKE_CURRENT_BINARY_DIR}/bytecode_build)
-
-add_library(frame STATIC ${SOURCE})
-target_include_directories(frame PUBLIC ${PROJECT_INCLUDE_DIR})
-
-target_link_libraries(frame PUBLIC bytecode)
+# Link dependencies if any (none mentioned directly here)

@@ -5,37 +5,43 @@
 #include "bytecode.h"
 #include "stack.h"
 #include "method.h"
+#include "instruction.h"
 
 class frame {
     method *callable;
-    offset_t return_offset;
+    size_t num_of_loc_params;
+    reg_t * local_variables;
 
     stack_raw<reg_t> *mem_stack;
-    std::vector<reg_t> local_variables; // custom allocator
+    offset_t program_counter = 0;
 
+    frame *prev;
 public:
 
     void set_arg(size_t idx, reg_t value) {
-        if (idx >= local_variables.size()) {
+        if (idx >= num_of_loc_params) {
             return;
         }
         local_variables[idx] = value;
     }
 
-    frame(method *callable_, stack_raw<reg_t> *mem_stack_, offset_t call_offset)
-        : callable(callable_), mem_stack(mem_stack_), return_offset(call_offset) {}
+    frame(method *callable_, stack_raw<reg_t> *mem_stack_, frame *prev_, reg_t *local_variables_)
+        : callable(callable_), mem_stack(mem_stack_), prev(prev_), local_variables(local_variables_) {}
 
-    frame() {}
+    frame *get_prev() { return prev; }
+    method *get_method() { return callable; }
+    reg_t *get_mem() { return local_variables; }
 
-    reg_t get_var(size_t idx) {
-        if (idx >= local_variables.size()) {
+
+    reg_t get_var(size_t &idx) {
+        if (idx >= callable->get_params_amount()) {
             return 0;
         }
         return local_variables[idx];
     }
 
-    offset_t get_return_offset() {
-        return return_offset;
+    inst *get_next_inst() {
+        return callable->get_inst(program_counter++);
     }
 };
 

@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <vector>
 #include <cstring>
+#include <iostream>
 
 template<typename T>
 class stack_raw {
@@ -24,7 +25,7 @@ public:
 
     stack_raw() : capacity(0) {}
     stack_raw(const size_t capacity_) : capacity(capacity_) {
-        buffer.resize(capacity);
+        buffer.reserve(capacity);
     }
 
     T get_head() {
@@ -33,19 +34,15 @@ public:
         }
         return T{};
     }
-    
+
     T pop() {
         if (!size) return T{};
-        if ( (--size) * 2 + 1 < capacity) {
-            squeeze();
-        }
-        return buffer[size];
+        return buffer[--size];
     };
 
     void push(T new_elem) {
-        if (size == capacity) expand();
+        if (++size == capacity) expand();
         buffer.push_back(new_elem);
-        size++;
     };
 
     // void push(T new_element) {
@@ -86,4 +83,4 @@ public:
 
 };
 
-#endif // VM_INSTRUCTION
+#endif // VM_STACK
